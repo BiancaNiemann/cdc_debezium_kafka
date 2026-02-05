@@ -1,0 +1,42 @@
+{
+  "name": "CDC Spike Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  
+  "features": { 
+    "ghcr.io/devcontainers/features/docker-in-docker:2": { 
+      "moby": false 
+    }, 
+    "ghcr.io/devcontainers/features/github-cli:1": {} 
+  },
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  },
+  
+  "postCreateCommand": "bash -c 'curl -LsSf https://astral.sh/uv/install.sh | sh && echo \"export PATH=$HOME/.cargo/bin:$PATH\" >> ~/.bashrc'",
+  
+  "forwardPorts": [
+    5432,
+    9092,
+    9200,
+    8083
+  ],
+  
+  "portsAttributes": {
+    "5432": {"label": "PostgreSQL"},
+    "9092": {"label": "Kafka"},
+    "9200": {"label": "Elasticsearch"},
+    "8083": {"label": "Kafka Connect"}
+  },
+  
+  "remoteUser": "vscode"
+}
